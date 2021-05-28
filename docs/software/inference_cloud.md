@@ -21,12 +21,12 @@
 
 |应用领域|模型名称|数据集|精度约束|延迟约束|参考模型下载链接|
 |-|-|-|-|-|-|
-|图像分类|Resnet50|ImageNet（224x224）|>= 99% of FP32 （[Top-1: 76.5%](https://github.com/PaddlePaddle/PaddleClas)）|15ms|[Paddle](https://paddle-inference-dist.bj.bcebos.com/AI-Rank/models/Paddle/ResNet50.tar.gz) [TensorFlow](http://download.tensorflow.org/models/resnet_v1_50_2016_08_28.tar.gz)|
-|目标检测|Mask R-CNN/ResNet50-FPN|COCO（1200x1200）|>= 99% of FP32（[Box AP: 37.9 Mask AP: 34.2](https://github.com/PaddlePaddle/PaddleDetection/blob/release/0.5/docs/MODEL_ZOO_cn.md)）|100ms|[Paddle](https://paddle-inference-dist.bj.bcebos.com/AI-Rank/models/Paddle/mask_rcnn_r50_fpn_1x.tar.gz) [detectron(caffe2)](https://github.com/facebookresearch/Detectron/blob/master/MODEL_ZOO.md) [detectron2](https://github.com/facebookresearch/detectron2)|
-|目标检测|YOLOv3-DarkNet53（608x608）|COCO|>= 99% of FP32 （[Box AP: 38.9](https://github.com/PaddlePaddle/PaddleDetection/blob/release/0.5/docs/MODEL_ZOO_cn.md)）|100ms|[Paddle](https://paddle-inference-dist.bj.bcebos.com/AI-Rank/models/Paddle/yolov3_darknet.tar.gz) [gluoncv(mxnet)](https://cv.gluon.ai/model_zoo/detection.html#yolo-v3) |
-|图像分割|HRNet_w48|CityScapes|>= 99% of FP32 （[0.8050 mIoU on val, multi-scale_test=false](https://github.com/PaddlePaddle/PaddleSeg/tree/release/v2.0/configs/fcn)）| 500ms |[Paddle](https://bj.bcebos.com/paddleseg/airank/hrnetw48_paddle_export.tar) [Pytorch](https://bj.bcebos.com/paddleseg/airank/hrnet48_cityscape.pt)|
+|图像分类|Resnet50|ImageNet（224x224）|>= 99% of FP32 （[Top-1: 76.1%](https://github.com/PaddlePaddle/PaddleClas)）|15ms|[Paddle](https://paddle-inference-dist.bj.bcebos.com/AI-Rank/models/Paddle/ResNet50.tar.gz) [TensorFlow](http://download.tensorflow.org/models/resnet_v1_50_2016_08_28.tar.gz)|
+|目标检测|Mask R-CNN/ResNet50-FPN|COCO（1200x1200）|>= 99% of FP32（[Box AP: 37.7 Mask AP: 33.9](https://github.com/PaddlePaddle/PaddleDetection/blob/release/0.5/docs/MODEL_ZOO_cn.md)）|100ms|[Paddle](https://paddle-inference-dist.bj.bcebos.com/AI-Rank/models/Paddle/mask_rcnn_r50_fpn_1x.tar.gz) [detectron(caffe2)](https://github.com/facebookresearch/Detectron/blob/master/MODEL_ZOO.md) [detectron2](https://github.com/facebookresearch/detectron2)|
+|目标检测|YOLOv3-DarkNet53（608x608）|COCO|>= 99% of FP32 （[Box AP: 37.0](https://github.com/PaddlePaddle/PaddleDetection/blob/release/0.5/docs/MODEL_ZOO_cn.md)）|100ms|[Paddle](https://paddle-inference-dist.bj.bcebos.com/AI-Rank/models/Paddle/yolov3_darknet.tar.gz) [gluoncv(mxnet)](https://cv.gluon.ai/model_zoo/detection.html#yolo-v3) |
+|图像分割|HRNet_w48|CityScapes|>= 99% of FP32 （[0.7950 mIoU on val, multi-scale_test=false](https://github.com/PaddlePaddle/PaddleSeg/tree/release/v2.0/configs/fcn)）| 500ms |[Paddle](https://bj.bcebos.com/paddleseg/airank/hrnetw48_paddle_export.tar) [Pytorch](https://bj.bcebos.com/paddleseg/airank/hrnet48_cityscape.pt)|
 |语义表示|BERT |SQUAD 1.1|>= 99% of FP32 （[F1_score: 90.874%](https://github.com/google-research/bert)）|130ms|[Paddle](https://github.com/PaddlePaddle/models/tree/release/1.8/PaddleNLP/pretrain_language_models/BERT) [TensorFlow](https://github.com/google-research/bert)|
-|机器翻译|Transformer（base model）| newstest2014 |>= 99% of FP32 （[BLEU: 26.35](https://github.com/PaddlePaddle/models/tree/release/1.8/PaddleNLP/machine_translation/transformer)） |130ms|[Paddle](https://paddle-inference-dist.bj.bcebos.com/AI-Rank/models/Paddle/transformer_base.tar.gz)|
+|机器翻译|Transformer（base model）| newstest2014 EN-DE|>= 99% of FP32 （[BLEU: 25.0](https://github.com/PaddlePaddle/models/tree/release/1.8/PaddleNLP/machine_translation/transformer)） |130ms|[Paddle](https://paddle-inference-dist.bj.bcebos.com/AI-Rank/models/Paddle/transformer_base.tar.gz)|
 
 - 为减少软件差异带来的性能影响，最大程度保证公平性，我们对约束条件做如下进一步的解释：
   -  精度约束：在指定测试集上，按照指定的精度评估方法得到的精度，不得低于上述给定的值，例如">= 99% of FP32 (76.46%)"代表不得低于99%*76.46%=75.6954%，要求按照第五个有效位进行四舍五入，即精度不得低于75.700%;
@@ -101,7 +101,17 @@
                 - offline_ips.log
                 - online_ips.log
 
-其中，submitter目录名为提交公司或组织的名称；system 目录名只能为 Linux 或者 Windows；modelx目录名只能为评测模型名称，每次提交可以只提交部分模型；code目录中存放评测代码；data目录用于存放评测使用的标准数据集；log目录用于存放评测日志结果，每次提交时，在线和离线吞吐评测日志至少提交一个，精度评测日志必须提交。下面详细说明必要文件的内容和格式
+其中，如下目录的名字需要按照实际情况修改：
+- submitter目录名为提交公司或组织的名称；
+- system 目录名只能为 Linux 或者 Windows；
+- modelx目录名只能为评测模型名称或模型名称+深度学习框架名称，每次提交可以只提交部分模型；
+
+如下目录名称不用修改：
+- code目录中存放评测代码；
+- data目录用于存放评测使用的标准数据集；
+- log目录用于存放评测日志结果，每次提交时，在线和离线吞吐评测日志至少提交一个，精度评测日志必须提交。
+
+下面详细说明必要文件的内容和格式
 
 ### system_information.json 内容要求
 描述评测硬件和操作系统信息，如下字段必须存在
